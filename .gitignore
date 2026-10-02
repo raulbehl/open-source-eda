@@ -1,0 +1,14 @@
+# Verilator build output
+obj_dir/
+
+# Waveforms
+*.vcd
+*.fst
+
+# cocotb / Python
+sim_build/
+results.xml
+__pycache__/
+
+# OS / editor
+.DS_Store
