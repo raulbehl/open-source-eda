@@ -1,3 +1,5 @@
+FROM mcr.microsoft.com/devcontainers/base:ubuntu-24.04
+
 # Build deps for Verilator (built from source by setup.sh) + Python for cocotb
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
