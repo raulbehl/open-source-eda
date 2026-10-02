@@ -1,7 +1,8 @@
 {
   "name": "Open Source EDA",
-  "build": { "dockerfile": "Dockerfile" },
-  "onCreateCommand": "bash .devcontainer/setup.sh",
+  // Prebuilt from .devcontainer/Dockerfile by .github/workflows/devcontainer-image.yml.
+  // Pulling it takes a couple of minutes; nothing is compiled in the codespace.
+  "image": "ghcr.io/raulbehl/open-source-eda:latest",
   "customizations": {
     "vscode": {
       "extensions": ["surfer-project.surfer", "eirikpre.systemverilog"]

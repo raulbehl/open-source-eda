@@ -1,0 +1,12 @@
+[options]
+mode prove
+
+[engines]
+smtbmc yices
+
+[script]
+read_slang -DFORMAL counter.sv
+prep -top counter
+
+[files]
+counter.sv

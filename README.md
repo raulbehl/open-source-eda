@@ -19,22 +19,31 @@ debugging a real design in the Surfer waveform viewer.
 
 ### What's in the box
 
+One codespace has the toolchain for the **whole season** — you set it up once
+and keep using it as new episodes come out.
+
 | Tool | What it's for |
 | --- | --- |
-| [Verilator](https://github.com/verilator/verilator) | SystemVerilog simulator — latest stable, built from source |
+| [Verilator](https://github.com/verilator/verilator) 5.052 | SystemVerilog simulator, built from source |
 | [Surfer](https://surfer-project.org/) | Waveform viewer, runs inside VS Code |
-| [cocotb](https://www.cocotb.org/) | Python testbenches (pre-installed for later episodes) |
+| [cocotb](https://www.cocotb.org/) | Python testbenches |
+| [UVM](https://www.accellera.org/downloads/standards/uvm) 2020.3.2 | Accellera UVM library, at `$UVM_HOME` |
+| [Yosys](https://github.com/YosysHQ/yosys) 0.69 | Synthesis, with the slang SystemVerilog frontend (`read_slang`) |
+| [SBY](https://github.com/YosysHQ/sby) | Formal verification front end |
+| Yices 2, Bitwuzla, Z3 | SMT solvers for SBY (and Z3 for Verilator's `randomize()`) |
+| [OpenSTA](https://github.com/parallaxsw/OpenSTA) | Static timing analysis |
 
-The environment is defined in [`.devcontainer/`](.devcontainer):
-`Dockerfile` (Ubuntu 24.04 + build deps + cocotb) and `setup.sh` (builds Verilator).
+The environment is defined in [`.devcontainer/Dockerfile`](.devcontainer/Dockerfile)
+and published as a prebuilt image, so a new codespace only downloads it —
+nothing is compiled when you open one.
 
 ### Try it
 
-1. Click **Open in GitHub Codespaces** above and wait for the build to finish.
+1. Click **Open in GitHub Codespaces** above and wait for it to start.
 2. Run the testbench:
 
    ```bash
-   cd dff/testbench
+   cd ep01-zero-to-waveforms/testbench
    make            # build and run — ends with "TEST PASSED"
    ```
 
@@ -48,14 +57,14 @@ The environment is defined in [`.devcontainer/`](.devcontainer):
 
 ### The design
 
-[`dff/`](dff) is a D flip-flop with an asynchronous active-low reset and a
-parameterised data type (`parameter type T`). The self-checking testbench runs
+[`ep01-zero-to-waveforms/`](ep01-zero-to-waveforms) is a D flip-flop with an
+asynchronous active-low reset and a parameterised data type (`parameter type T`). The self-checking testbench runs
 the same checker against five types — 1-bit, 8-bit, 32-bit, 64-bit and a packed
 struct — covering async reset in both clock phases, directed patterns and
 constrained-random data.
 
 ```
-dff/
+ep01-zero-to-waveforms/
 ├── rtl/dff.sv
 └── testbench/
     ├── dff_tb.sv        top: clock, five DUT instances, verdict
@@ -72,6 +81,30 @@ Why this season builds the latest Verilator instead of installing the one your
 distro ships — and what that control buys you for the rest of the series.
 
 **Subscribe to get notified when it drops.** <!-- TODO: add channel link -->
+
+---
+
+## Getting new episodes
+
+Each episode lands in its own `epNN-…/` folder on `main`. Keep the codespace you
+already have — there's no need to start a new one.
+
+**Saving your own work.** The first time you commit and push from the
+codespace, GitHub offers to create a fork for you. Say yes: your work goes to
+your fork, and this repo becomes `upstream`.
+
+**When a new episode is out:**
+
+```bash
+git pull upstream main     # or `git pull` if you haven't forked yet
+```
+
+The new episode folder appears next to your own code. Keep your work in your
+own files or folders and the pull won't conflict with it.
+
+> **Unused codespaces are deleted after 30 days.** Push your work to your fork
+> so nothing is lost; if your codespace does go, just open a new one from the
+> badge above and clone your fork.
 
 ---
 
