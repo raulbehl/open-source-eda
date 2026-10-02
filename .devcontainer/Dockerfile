@@ -67,7 +67,11 @@ RUN git clone --depth 1 --branch ${BITWUZLA_VERSION} https://github.com/bitwuzla
 
 # ---- OpenSTA: static timing analysis (needs CUDD) ----------------------------
 RUN git clone --depth 1 --branch ${CUDD_VERSION} https://github.com/cuddorg/cudd \
- && cd cudd && ./configure --prefix=/opt/cudd && make -j"$(nproc)" && make install \
+ && cd cudd \
+ # git checkout scrambles mtimes, so make tries to regenerate these with
+ # aclocal-1.14 (which nobody has). Re-stamp them in dependency order.
+ && touch aclocal.m4 && sleep 1 && touch Makefile.in config.h.in configure \
+ && ./configure --prefix=/opt/cudd && make -j"$(nproc)" && make install \
  && cd .. && rm -rf cudd \
  && git clone https://github.com/parallaxsw/OpenSTA \
  && cd OpenSTA && git checkout ${OPENSTA_COMMIT} \

@@ -1,8 +1,9 @@
 {
   "name": "Open Source EDA",
   // Prebuilt from .devcontainer/Dockerfile by .github/workflows/devcontainer-image.yml.
+  // TODO before merging to main: switch the tag back to :latest.
   // Pulling it takes a couple of minutes; nothing is compiled in the codespace.
-  "image": "ghcr.io/raulbehl/open-source-eda:latest",
+  "image": "ghcr.io/raulbehl/open-source-eda:prebuilt-image",
   "customizations": {
     "vscode": {
       "extensions": ["surfer-project.surfer", "eirikpre.systemverilog"]
