@@ -88,11 +88,12 @@ ENV UVM_HOME=/opt/1800.2-2020.3.2
 
 # ---- cocotb in a venv (Ubuntu 24.04 blocks system-wide pip, PEP 668) ---------
 # Owned by 'vscode' so viewers can pip install more without sudo.
+# click is needed by SBY.
 ENV VIRTUAL_ENV=/opt/venv
 ENV PATH="/opt/venv/bin:${PATH}"
 RUN python3 -m venv /opt/venv \
  && pip install --no-cache-dir --upgrade pip \
- && pip install --no-cache-dir cocotb pytest \
+ && pip install --no-cache-dir cocotb pytest click \
  && chown -R vscode:vscode /opt/venv
 
 WORKDIR /
